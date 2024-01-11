@@ -10,9 +10,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - clang-version: 16.x
+          - clang-version: 12.x
+          - clang-version: 14.x
           - clang-version: 17.x
-          - clang-version: 18.x
     runs-on: ubuntu-latest
     steps:
     - uses: rokibhasansagar/slimhub_actions@main
@@ -23,3 +23,11 @@ jobs:
       run: ./build-llvm.py --vendor-string Pdx --targets ARM AArch64 --projects clang lld --build-stage1-only --no-update --ref release/${{ matrix.clang-version }} -i android-kernel-toolchain-latest
     - name: Build Binutils
       run: ./build-binutils.py --targets arm-linux-gnueabi aarch64-linux-gnu -i android-kernel-toolchain-latest
+    - name: upload
+      env:
+       clang-version: ${{ matrix.clang-version }}
+       date: $(date)
+      uses: actions/upload-artifact@v3
+      with:
+        name: akt_${{ env.clang-version }}_${{ env.date }}
+        path: android-kernel-toolchain-latest/*
