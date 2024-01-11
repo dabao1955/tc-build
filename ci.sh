@@ -34,6 +34,7 @@ function do_deps() {
     # We only run this when running on GitHub Actions
     [[ -z ${GITHUB_ACTIONS:-} ]] && return 0
 
+    mkdir src -pv
     sudo apt-get install -y --no-install-recommends \
         bc \
         bison \
