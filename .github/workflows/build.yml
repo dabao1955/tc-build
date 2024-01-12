@@ -33,7 +33,7 @@ jobs:
         done
         cd ../arm-linux-gnueabi
         for file in $(ls *); do
-            ln -s -v "$file" "aarch64-linux-androideabi-${file-}"
+            ln -s -v "$file" "arm-linux-androideabi-${file-}"
         done
     - name: upload
       if: github.event_name != 'push'
