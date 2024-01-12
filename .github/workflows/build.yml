@@ -21,15 +21,24 @@ jobs:
     - name: Install dependencies
       run: bash ci.sh deps
     - name: Build LLVM 
-      run: ./build-llvm.py --vendor-string Pdx --targets ARM AArch64 --projects clang lld --build-stage1-only --no-update --ref release/${{ matrix.clang-version }} -i android-kernel-toolchain-latest
+      run: ./build-llvm.py --vendor-string Pdx --targets ARM AArch64 --projects clang lld --build-stage1-only --no-update --ref release/${{ matrix.clang-version }} -i android-kernel-toolchain-latest/clang
     - name: Build Binutils
       run: ./build-binutils.py --targets arm-linux-gnueabi aarch64-linux-gnu -i android-kernel-toolchain-latest
-    - run: export date=$(date) >>$GITHUB_ENV
+    - name: link
+      continue-on-error: true
+      run: |
+        cd android-kernel-toolchain-latest/aarch64-linux-gnu
+        for file in $(ls *); do
+            ln -s -v "$file" "aarch64-linux-android-${file-}"
+        done
+        cd ../arm-linux-gnueabi
+        for file in $(ls *); do
+            ln -s -v "$file" "aarch64-linux-androideabi-${file-}"
+        done
     - name: upload
       if: github.event_name != 'push'
       env:
        clang-version: ${{ matrix.clang-version }}
-       date: ${{ env.date }}
       uses: actions/upload-artifact@v3
       with:
         name: akt_${{ env.clang-version }}_${{ env.date }}
