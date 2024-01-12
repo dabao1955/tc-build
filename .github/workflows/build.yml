@@ -27,9 +27,10 @@ jobs:
     - name: link
       continue-on-error: true
       run: |
+        cd android-kernel-toolchain-latest
         mv -v aarch64-linux-gnu aarch64-linux-android
         mv -v arm-linux-gnueabi arm-linux-androidabei
-        cd android-kernel-toolchain-latest/aarch64-linux-android
+        cd aarch64-linux-android
         for file in $(ls *); do
             ln -s -v "$file" "aarch64-linux-android-${file-}"
         done
