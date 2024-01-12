@@ -24,19 +24,21 @@ jobs:
       run: ./build-llvm.py --vendor-string Pdx --targets ARM AArch64 --projects clang lld --build-stage1-only --no-update --ref release/${{ matrix.clang-version }} -i android-kernel-toolchain-latest/clang
     - name: Build Binutils
       run: ./build-binutils.py --targets arm-linux-gnueabi aarch64-linux-gnu -i android-kernel-toolchain-latest
+    - run: sudo tree android-kernel-toolchain-latest
+      continue-on-error: true
     - name: link
       continue-on-error: true
       run: |
         cd android-kernel-toolchain-latest
         mv -v aarch64-linux-gnu aarch64-linux-android
         mv -v arm-linux-gnueabi arm-linux-androidabei
-        cd aarch64-linux-android
+        cd aarch64-linux-android/bin
         for file in $(ls *); do
-            ln -s -v "$file" "aarch64-linux-android-${file-}"
+            ln -sf -v  "aarch64-linux-android-${file-}" "$file"
         done
-        cd ../arm-linux-androidabei
+        cd ../../arm-linux-androidabei/bin
         for file in $(ls *); do
-            ln -s -v "$file" "arm-linux-androideabi-${file-}"
+            ln -sf -v "arm-linux-androideabi-${file-}" "$file"
         done
     - name: upload
       if: github.event_name != 'push'
