@@ -14,6 +14,7 @@ jobs:
           - clang-version: 15.x
           - clang-version: 16.x
           - clang-version: 17.x
+          - clang-version: 18.x
     runs-on: ubuntu-latest
     steps:
     - uses: rokibhasansagar/slimhub_actions@main
