@@ -56,14 +56,15 @@ jobs:
           - arch: arm
           - arch: arm64
     runs-on: ubuntu-latest
+    container: fedora-latest
     steps:
-    - uses: rokibhasansagar/slimhub_actions@main
+#    - uses: rokibhasansagar/slimhub_actions@main
     - uses: actions/checkout@v4
     - name: Install dependencies
       run: |
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-        sudo apt-get update
-        sudo apt-get install flex bison ncurses-dev texinfo g++ gperf patch libtool automake gcc g++-10 gcc-10 libncurses5-dev gawk subversion expat libexpat1-dev python-all-dev binutils-dev bc libcap-dev autoconf libgmp-dev build-essential pkg-config libmpc-dev libmpfr-dev autopoint gettext txt2man liblzma-dev libssl-dev libz-dev mercurial wget tar libc6-dev zstd --fix-broken --fix-missing
+        sudo dnf groupinstall "Development tools" -y
+        sudo dnf install mpfr-devel gmp-devel libmpc-devel zlib-devel glibc-devel.i686 glibc-devel binutils-devel g++ texinfo bison wget flex cmake which ninja-build clang lld bzip2 binutils-arm-linux-gnu binutils-aarch64-linux-gnu file -y
+
     - name: Build gcc
       run: |
         wget https://github.com/mvaisakh/gcc-build/raw/main/build-gcc.sh
