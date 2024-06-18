@@ -56,7 +56,7 @@ jobs:
           - arch: arm
           - arch: arm64
     runs-on: ubuntu-latest
-    container: fedora-latest
+    container: fedora:latest
     steps:
 #    - uses: rokibhasansagar/slimhub_actions@main
     - uses: actions/checkout@v4
