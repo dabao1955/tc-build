@@ -12,6 +12,7 @@ jobs:
         include:
           - clang-version: 17.x
           - clang-version: 18.x
+          - clang-version: 19.x
     runs-on: ubuntu-latest
     steps:
     - uses: rokibhasansagar/slimhub_actions@main
