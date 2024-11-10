@@ -63,7 +63,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install dependencies
       run: |
-        sudo dnf groupinstall "Development tools" -y
+        sudo dnf update && sudo dnf groupinstall "Development tools" -y
         sudo dnf install mpfr-devel gmp-devel libmpc-devel zlib-devel glibc-devel.i686 glibc-devel binutils-devel g++ texinfo bison wget flex cmake which ninja-build clang lld bzip2 binutils-arm-linux-gnu binutils-aarch64-linux-gnu tree file -y
 
     - name: Build gcc
