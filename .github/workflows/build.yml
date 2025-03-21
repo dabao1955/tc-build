@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       run: bash ci.sh deps
     - name: Build LLVM 
-      run: ./build-llvm.py --show-build-commands --vendor-string Pdx --targets ARM AArch64 --projects clang lld --build-stage1-only --no-update --ref release/${{ matrix.clang-version }} -i android-kernel-toolchain-latest/clang
+      run: ./build-llvm.py --show-build-commands --vendor-string Pdx --targets ARM AArch64 --projects clang lld libc --no-update --ref release/${{ matrix.clang-version }} -i android-kernel-toolchain-latest/clang
     - run: sudo tree android-kernel-toolchain-latest
 #    - name: Build Binutils
 #      run: ./build-binutils.py --targets arm-linux-gnueabi aarch64-linux-gnu -i android-kernel-toolchain-latest
