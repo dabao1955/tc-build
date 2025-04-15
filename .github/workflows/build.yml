@@ -10,10 +10,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - clang-version: 17.x
           - clang-version: 18.x
           - clang-version: 19.x
           - clang-version: 20.x
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04-arm
     steps:
     - uses: rokibhasansagar/slimhub_actions@main
     - uses: actions/checkout@v4
@@ -69,7 +70,7 @@ jobs:
     - name: Build gcc
       run: |
         wget https://github.com/mvaisakh/gcc-build/raw/main/build-gcc.sh
-        bash build-gcc.sh -a ${{ matrix.arch }}
+        bash -x build-gcc.sh -a ${{ matrix.arch }}
     - name: cat 
       run: sudo tree gcc-${{ matrix.arch }}
       
