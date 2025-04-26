@@ -56,7 +56,7 @@ jobs:
         include:
           - arch: arm
           - arch: arm64
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04-arm
     container: fedora:latest
     steps:
 #    - uses: rokibhasansagar/slimhub_actions@main
