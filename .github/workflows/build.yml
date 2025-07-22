@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - clang-version: master
+          - clang-version: main
           - clang-version: 18.x
           - clang-version: 19.x
           - clang-version: 20.x
