@@ -11,9 +11,9 @@ jobs:
       matrix:
         include:
           - clang-version: main
-          - clang-version: 18.x
-          - clang-version: 19.x
-          - clang-version: 20.x
+          - clang-version: release/18.x
+          - clang-version: release/19.x
+          - clang-version: release20.x
     runs-on: ubuntu-22.04-arm
     steps:
     - uses: rokibhasansagar/slimhub_actions@main
@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: bash ci.sh deps
     - name: Build LLVM 
-      run: ./build-llvm.py --show-build-commands --vendor-string Pdx --targets ARM AArch64 --projects clang lld libc --no-update --ref release/${{ matrix.clang-version }} -i android-kernel-toolchain-latest/clang
+      run: ./build-llvm.py --show-build-commands --vendor-string Pdx --targets ARM AArch64 --projects clang lld libc --no-update --ref ${{ matrix.clang-version }} -i android-kernel-toolchain-latest/clang
     - run: sudo tree android-kernel-toolchain-latest
 #    - name: Build Binutils
 #      run: ./build-binutils.py --targets arm-linux-gnueabi aarch64-linux-gnu -i android-kernel-toolchain-latest
