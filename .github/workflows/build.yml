@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-22.04-arm
     steps:
     - uses: rokibhasansagar/slimhub_actions@main
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Install dependencies
       run: bash ci.sh deps
     - name: Build LLVM
@@ -45,7 +45,7 @@ jobs:
       if: github.event_name != 'push'
       env:
        clang-version: ${{ matrix.clang-version }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: akt_${{ env.clang-version }}_${{ env.date }}
         path: android-kernel-toolchain-latest/*
@@ -62,7 +62,7 @@ jobs:
     container: fedora:latest
     steps:
 #    - uses: rokibhasansagar/slimhub_actions@main
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Install dependencies
       run: |
         sudo dnf update && sudo dnf groupinstall "Development tools" -y
@@ -79,7 +79,7 @@ jobs:
       if: github.event_name != 'push'
       env:
        clang-version: ${{ matrix.arch }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: akt_${{ env.arch }}_${{ env.date }}
         path: gcc-${{ env.arch }}/*      
