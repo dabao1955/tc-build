@@ -10,8 +10,6 @@ jobs:
       matrix:
         include:
           - clang-version: main
-          - clang-version: release/18.x
-          - clang-version: release/19.x
           - clang-version: release/20.x
           - clang-version: release/21.x
           - clang-version: release/22.x
@@ -48,33 +46,26 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: akt_${{ env.clang-version }}_${{ env.date }}
-        path: android-kernel-toolchain-latest/*
+        path: act/*
 
 
   build-gcc-test:
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - arch: arm
-          - arch: arm64
-    runs-on: ubuntu-22.04-arm
-    container: fedora:latest
+    runs-on: ubuntu-24.04-arm
     steps:
-#    - uses: rokibhasansagar/slimhub_actions@main
+    - uses: rokibhasansagar/slimhub_actions@main
     - uses: actions/checkout@v6
     - name: Install dependencies
       run: |
-        sudo dnf update && sudo dnf groupinstall "Development tools" -y
-        sudo dnf install git mpfr-devel gmp-devel libmpc-devel texinfo zlib-devel glibc-devel binutils-devel g++ texinfo bison wget flex cmake which ninja-build clang lld bzip2 binutils-arm-linux-gnu binutils-aarch64-linux-gnu tree awk file -y
+        sudo apt-get update
+        sudo apt-get install -y flex bison ncurses-dev texinfo gcc gperf patch libtool automake g++ libncurses5-dev gawk subversion expat libexpat1-dev binutils-dev bc libcap-dev autoconf libgmp-dev build-essential pkg-config libmpc-dev libmpfr-dev autopoint gettext txt2man liblzma-dev libssl-dev libz-dev mercurial wget tar cmake zstd ninja-build lz4 liblz4-tool liblz4-dev lzma libc6-dev-armhf --fix-broken --fix-missing
 
     - name: Build gcc
       run: |
         wget https://github.com/mvaisakh/gcc-build/raw/main/build-gcc.sh
-        bash -x build-gcc.sh -a ${{ matrix.arch }}
-    - name: cat 
-      run: sudo tree gcc-${{ matrix.arch }}
-      
+        bash -x build-gcc.sh -a arm64
+        
     - name: upload
       if: github.event_name != 'push'
       env:
@@ -82,5 +73,5 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: akt_${{ env.arch }}_${{ env.date }}
-        path: gcc-${{ env.arch }}/*      
+        path: gcc-arm64/*      
       
