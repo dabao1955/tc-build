@@ -14,7 +14,7 @@ jobs:
           - clang-version: release/22.x
     runs-on: ubuntu-24.04-arm
     steps:
-    - uses: rokibhasansagar/slimhub_actions@main
+    #- uses: rokibhasansagar/slimhub_actions@main
     - uses: actions/checkout@v6
     - name: Install dependencies
       run: bash ci.sh deps
@@ -53,7 +53,7 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-24.04-arm
     steps:
-    - uses: rokibhasansagar/slimhub_actions@main
+    #- uses: rokibhasansagar/slimhub_actions@main
     - uses: actions/checkout@v6
     - name: Install dependencies
       run: |
